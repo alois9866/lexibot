@@ -10,7 +10,7 @@ _Brief description of the main points of the implementation._
 
 - [ ] Request is assigned to a project maintainer.
 - [ ] Labels are specified according to the type of request:
-  `feature` for features and action items, `fix` for bugs.
+  `feature`/`improvement` for features and action items, `fix` for bugs.
 - [ ] Project is set to `lexibot`.
 - [ ] New unit tests are added for changes that could be tested.
 
