@@ -23,7 +23,7 @@ jobs:
         pip install -r requirements.txt
     - name: Lint with pylint
       run: |
-        pylint bot/**/*.py server/**/*.py
+        pylint bot/ server/
     - name: Test with pytest
       run: |
         pytest
