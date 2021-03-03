@@ -1,2 +1,5 @@
+"""This module contains tests for model.py module."""
+
+
 def test_placeholder():
-    pass
+    """A test placeholder."""
