@@ -6,5 +6,5 @@ create table links
     start_date date         not null,
     end_date   date         not null,
     provider   varchar(120) not null,
-    clicks     integer
+    clicks integer not null default 0
 );

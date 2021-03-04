@@ -1,5 +1,5 @@
 
-.PHONY: test lint deps write-deps
+.PHONY: test lint deps write-deps run-local-db
 
 test:
 	pytest
@@ -13,3 +13,13 @@ deps:
 # Must be run in virtual environment.
 write-deps:
 	pip freeze > requirements.txt
+
+run-local-server:
+	DBUSER=postgres DBPASSWORD=password DBHOST=127.0.0.1 python3 ./server/main.py
+
+run-local-db:
+	docker build -t lexibot-local-db --file local_db/Dockerfile .
+	docker run --rm -p 5432:5432 --name lexibot-postgres -e POSTGRES_PASSWORD=password -d lexibot-local-db
+
+stop-local-db:
+	docker stop $(shell docker ps -a -q --filter="name=lexibot-postgres")
