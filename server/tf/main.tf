@@ -70,6 +70,7 @@ resource "aws_db_instance" "lexibot-db" {
   backup_retention_period = 0
   backup_window           = "21:55-22:25"
   maintenance_window      = "sun:01:25-sun:01:55"
+  skip_final_snapshot     = true
 }
 
 resource "null_resource" "lexibot-db-setup" {

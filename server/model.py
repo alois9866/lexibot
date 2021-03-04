@@ -1,17 +1,32 @@
 """This module contains functions to work with link DB."""
 
 import datetime
+import uuid
 
 JISHO_URL = 'jisho.org/word/'
 
 
+def bot_registered(conn, token: uuid.UUID) -> bool:
+    registered = False
+
+    tx = conn.cursor()
+
+    tx.execute("""select exists(select 1 from bots where token=%s)""", (token,))
+    if tx.fetchone() is not None:
+        registered = True
+
+    tx.close()
+
+    return registered
+
+
 def create(conn, chat_id: str, word: str, provider: str = JISHO_URL) -> int:
     """Inserts new word in chat with id chat_id, returns id of inserted word"""
-    if len(chat_id) == 0:
+    if chat_id is None or len(chat_id) == 0:
         raise ValueError('chat_id is empty')
-    if len(word) == 0:
+    if word is None or len(word) == 0:
         raise ValueError('word is empty')
-    if len(provider) == 0:
+    if provider is None or len(provider) == 0:
         raise ValueError('provider is empty')
 
     start_date = datetime.datetime.utcnow().date()
@@ -49,7 +64,7 @@ def handle_click(conn, link_id: int) -> str:
     provider = row[3]
     clicks = row[4]
 
-    full_link = "http://" + provider + word
+    full_link = "http://" + provider + word  # todo: Use provider as template instead.
 
     if start_date <= current_date <= end_date:
         tx.execute("""update links set clicks = %s where id = %s""",
@@ -58,7 +73,7 @@ def handle_click(conn, link_id: int) -> str:
     conn.commit()
     tx.close()
 
-    return full_link  # todo: Use provider as template instead.
+    return full_link
 
 
 def get_words_with_clicks(conn, chat_id: str, start_date: datetime.date, end_date: datetime.date):
