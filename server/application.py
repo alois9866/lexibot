@@ -1,4 +1,4 @@
-"""This package contains the server inself and handlers for it's endpoints."""
+"""This package contains the server itself and handlers for it's endpoints."""
 import flask
 
 import model
