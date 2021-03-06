@@ -1,6 +1,5 @@
 """This is a core module for Telegram bot version"""
 
-import telegram
 from telegram.ext import CommandHandler, Updater
 
 available_user_commands = ["help", "start"]
@@ -14,7 +13,7 @@ def start_reply(update, context):
 
 
 def help_reply(update, context):
-    text = (f"Info:\n"
+    text = ("Info:\n"
             "You can use the following commands:\n")
     for auc in available_user_commands:
         text += f"\t`/{auc}`\n"
