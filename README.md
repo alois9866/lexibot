@@ -13,7 +13,11 @@ database manually, see TODO.
 
 ### How to run a local bot client
 
-TODO
+As a demonstation example, you have to specify bot token inside `bot/config.json`. After that run the following:
+
+```
+python -m bot.main -bcp bot/config.json
+```
 
 ### How to run a server in the cloud
 
