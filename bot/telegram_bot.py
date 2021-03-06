@@ -6,6 +6,7 @@ available_user_commands = ["help", "start"]
 
 
 def start_reply(update, context):
+    """The reply action on user's /start command"""
     context.bot.send_message(chat_id=update.effective_chat.id,
                              text=f"Hello, my name is {context.bot.first_name}. "
                              "I am a bot. "
@@ -13,6 +14,7 @@ def start_reply(update, context):
 
 
 def help_reply(update, context):
+    """The reply action on user's /help command"""
     text = ("Info:\n"
             "You can use the following commands:\n")
     for auc in available_user_commands:
@@ -22,6 +24,7 @@ def help_reply(update, context):
 
 
 def run(bot_token):
+    """Function to activate Telegram bot custom behaviour"""
     updater = Updater(token=bot_token, use_context=True)
     dispatcher = updater.dispatcher
     user_command_handlers = [

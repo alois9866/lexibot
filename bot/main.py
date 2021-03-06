@@ -7,6 +7,7 @@ from bot import telegram_bot
 
 
 def main():
+    """Method to run a bot"""
     parser = argparse.ArgumentParser(description="Main script to invoke "
                                      "custom bots")
     parser.add_argument("-bcp", "--bot_config_path", type=str,
