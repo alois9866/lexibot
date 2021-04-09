@@ -2,7 +2,7 @@
 .PHONY: test lint deps write-deps run-local-db
 
 test:
-	pytest
+	python -m pytest
 
 lint:
 	pylint bot/ server/

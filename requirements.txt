@@ -18,6 +18,7 @@ psycopg2==2.8.6
 py==1.10.0
 pylint==2.7.2
 pyparsing==2.4.7
+SudachiPy==0.5.2
 pytest==6.2.2
 python-telegram-bot==13.3
 pytz==2021.1
