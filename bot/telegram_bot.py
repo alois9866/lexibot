@@ -1,11 +1,19 @@
 """This is a core module for Telegram bot version"""
+import logging
 
-from telegram.ext import CommandHandler, Updater
+from telegram.ext import CommandHandler, MessageHandler, Updater,\
+    CallbackContext, Filters
+from telegram.update import Update
 
-available_user_commands = ["help", "start"]
+from bot.parser import extract_japanese_words
+
+logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+                     level=logging.INFO)
+
+available_user_commands = ["help", "start", "echo"]
 
 
-def start_reply(update, context):
+def start_reply(update: Update, context: CallbackContext) -> None:
     """The reply action on user's /start command"""
     context.bot.send_message(chat_id=update.effective_chat.id,
                              text=f"Hello, my name is {context.bot.first_name}. "
@@ -13,7 +21,7 @@ def start_reply(update, context):
                              "You can type `/help` to know me better...")
 
 
-def help_reply(update, context):
+def help_reply(update: Update, context: CallbackContext) -> None:
     """The reply action on user's /help command"""
     text = ("Info:\n"
             "You can use the following commands:\n")
@@ -23,16 +31,36 @@ def help_reply(update, context):
                              text=text)
 
 
+def echo_reply(update: Update, _: CallbackContext) -> None:
+    """Echo user message"""
+    text = update.message.text
+    answer = ' '.join(text.split(' ')[1:])
+    update.message.reply_text(answer)
+
+
+def reply_japanese(update: Update, _: CallbackContext) -> None:
+    """Echo only japanese words"""
+    if update.message is not None:
+        text = update.message.text
+        answer = f'Japanese words: {extract_japanese_words(text)}'
+        update.message.reply_text(answer)
+
+
 def run(bot_token):
     """Function to activate Telegram bot custom behaviour"""
     updater = Updater(token=bot_token, use_context=True)
     dispatcher = updater.dispatcher
     user_command_handlers = [
         CommandHandler('start', start_reply),
-        CommandHandler('help', help_reply)
+        CommandHandler('help', help_reply),
+        CommandHandler("echo", echo_reply),
     ]
     for uch in user_command_handlers:
         dispatcher.add_handler(uch)
+
+    user_message_handlers = [MessageHandler(Filters.text, reply_japanese)]
+    for umh in user_message_handlers:
+        dispatcher.add_handler(umh)
 
     updater.start_polling()
     print(f"Talk to the bot here: t.me/{updater.bot.username}\n"
