@@ -15,6 +15,7 @@ unicode_ranges = {
 
 
 def is_japanese_char(symbol: str) -> bool:
+    '''Test whether character can be found in japanese text according to Unicode code'''
     keys = ['hiragana', 'katakana', 'katakana_phonetic_extensions', 'halfwidth_katakana', 'cjk']
     for k in keys:
         if ord(symbol) in unicode_ranges[k]:
