@@ -15,7 +15,7 @@ provider "aws" {
 locals {
   default_availability_zone = "eu-central-1a"
 
-  domain_name     = "lexibot.link"
+  domain_name     = "lexibot.link" // TODO: Extract to parameter.
   www_domain_name = format("www.%s", local.domain_name)
 }
 

@@ -11,7 +11,7 @@ def _full_link(provider, word):
 
 
 def create(conn, chat_id: str, word: str, provider: str = JISHO_URL) -> str:
-    """Inserts new word in chat with id chat_id, returns link to inserted word."""
+    """Inserts new word in chat with id chat_id, returns id of the inserted word."""
     if not chat_id:
         raise ValueError('chat_id is empty')
     if not word:
