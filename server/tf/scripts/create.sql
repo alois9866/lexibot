@@ -8,8 +8,3 @@ create table links
     provider   varchar(120) not null,
     clicks     integer      not null default 0
 );
-
-create table bots
-(
-    token uuid primary key
-)
