@@ -23,3 +23,6 @@ run-local-db:
 
 stop-local-db:
 	docker stop $(shell docker ps -a -q --filter="name=lexibot-postgres")
+
+doc_html:
+	sphinx-build -M html "./docs"/source "./docs/doc_build"

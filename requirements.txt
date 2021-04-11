@@ -31,6 +31,7 @@ six==1.15.0
 sortedcontainers==2.1.0
 SudachiDict-core==20201223.post1
 SudachiPy==0.5.2
+Sphinx==3.5.3
 toml==0.10.2
 tornado==6.1
 tzlocal==2.1
