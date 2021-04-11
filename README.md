@@ -2,6 +2,8 @@
 
 Simple Telegram bot for language learning support.
 
+[Full server API description](docs/api_description.md).
+
 ### How to run a local server
 
 You will need a valid docker installation to run the database for the local server. If you want to configure the
