@@ -15,7 +15,7 @@ provider "aws" {
 locals {
   default_availability_zone = "eu-central-1a"
 
-  domain_name     = "lexibot.link"
+  domain_name     = "lexibot.link" // TODO: Extract to parameter.
   www_domain_name = format("www.%s", local.domain_name)
 }
 
@@ -70,6 +70,7 @@ resource "aws_db_instance" "lexibot-db" {
   backup_retention_period = 0
   backup_window           = "21:55-22:25"
   maintenance_window      = "sun:01:25-sun:01:55"
+  skip_final_snapshot     = true
 }
 
 resource "null_resource" "lexibot-db-setup" {

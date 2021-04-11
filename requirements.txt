@@ -14,13 +14,17 @@ Jinja2==2.11.3
 lazy-object-proxy==1.5.2
 MarkupSafe==1.1.1
 mccabe==0.6.1
+mirakuru==2.3.0
 packaging==20.9
 pluggy==0.13.1
+port-for==0.4
+psutil==5.8.0
 psycopg2==2.8.6
 py==1.10.0
 pylint==2.7.2
 pyparsing==2.4.7
 pytest==6.2.2
+pytest-postgresql==2.6.1
 python-telegram-bot==13.3
 pytz==2021.1
 six==1.15.0

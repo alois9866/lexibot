@@ -5,7 +5,7 @@ test:
 	python -m pytest
 
 lint:
-	pylint bot/ server/
+	pylint --ignore-patterns=test_.*?py bot/ server/
 
 deps:
 	pip install -r requirements.txt
