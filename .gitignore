@@ -130,6 +130,9 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
+# Prevent accidential change!
+bot/config.json
+
 # Local .terraform directories
 **/.terraform/*
 
