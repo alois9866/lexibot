@@ -1,4 +1,8 @@
-"""This is a core module for Telegram bot version"""
+"""
+This is a core module for Telegram bot version.
+
+Adjusts bot replies to user command/messages.
+"""
 import logging
 
 from telegram.ext import CommandHandler, MessageHandler, Updater,\
@@ -47,7 +51,23 @@ def reply_japanese(update: Update, _: CallbackContext) -> None:
 
 
 def run(bot_token):
-    """Function to activate Telegram bot custom behaviour"""
+    """Function to activate Telegram bot custom behaviour
+
+    :param bot_token: Telegram bot token
+    :type bot_token: str
+    :return: None
+    :rtype: NoneType
+
+    Usage::
+
+        >>> from bot import telegram_bot
+        >>> token = "<your_token>"
+        >>> telegram_bot.run(token)
+        2021-04-11 13:27:50,212 - apscheduler.scheduler - INFO - Scheduler started
+        Talk to the bot here: t.me/<name_of_the_bot_corresponding_to_the_token>
+         or inside Telegram application: @<name_of_the_bot_corresponding_to_the_token>
+        Press Ctrl+C to stop the bot...
+    """
     updater = Updater(token=bot_token, use_context=True)
     dispatcher = updater.dispatcher
     user_command_handlers = [
