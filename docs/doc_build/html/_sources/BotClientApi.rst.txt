@@ -10,12 +10,16 @@ Contents
 Description
 """""""""""
 
+`bot.telegram_bot`
+^^^^^^^^^^^^^^^^^^
 .. _`telegram bot module`:
 
 .. automodule:: bot.telegram_bot
     :members:
     :private-members:
 
+`bot.parser`
+^^^^^^^^^^^^^^^^^^
 .. _`parser module`:
 
 .. automodule:: bot.parser

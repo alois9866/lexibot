@@ -11,7 +11,10 @@ Welcome to lexibot's documentation!
     :caption: Contents:
 
     BotClientApi
+    ServerApi
 
+.. note::
+   Project is in progress
 
 Indices and tables
 ==================
