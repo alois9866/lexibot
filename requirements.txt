@@ -23,6 +23,7 @@ psycopg2==2.8.6
 py==1.10.0
 pylint==2.7.2
 pyparsing==2.4.7
+SudachiPy==0.5.2
 pytest==6.2.2
 pytest-postgresql==2.6.1
 python-telegram-bot==13.3
@@ -31,6 +32,7 @@ six==1.15.0
 sortedcontainers==2.1.0
 SudachiDict-core==20201223.post1
 SudachiPy==0.5.2
+Sphinx==3.5.3
 toml==0.10.2
 tornado==6.1
 tzlocal==2.1

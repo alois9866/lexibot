@@ -1,4 +1,4 @@
-"""This package contains the server itself and handlers for it's endpoints."""
+"""This module contains the server itself and handlers for it's endpoints."""
 import datetime
 import json
 

@@ -1,0 +1,194 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17: http://docutils.sourceforge.net/" />
+
+    <title>Server API &#8212; lexibot 0 documentation</title>
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Telegram Bot client API" href="BotClientApi.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="BotClientApi.html" title="Telegram Bot client API"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">lexibot 0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Server API</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="server-api">
+<h1>Server API<a class="headerlink" href="#server-api" title="Permalink to this headline">¶</a></h1>
+<section id="contents">
+<h2>Contents<a class="headerlink" href="#contents" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference internal" href="#application-module">application module</a></p>
+<p><a class="reference internal" href="#model-module">model module</a></p>
+</section>
+<section id="description">
+<h2>Description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h2>
+<section id="server-application">
+<h3><cite>server.application</cite><a class="headerlink" href="#server-application" title="Permalink to this headline">¶</a></h3>
+<span class="target" id="module-server.application"><span id="application-module"></span></span><p>This module contains the server itself and handlers for it’s endpoints.</p>
+<dl class="py function">
+<dt id="server.application._initialized">
+<code class="sig-prename descclassname"><span class="pre">server.application.</span></code><code class="sig-name descname"><span class="pre">_initialized</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#server.application._initialized" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns True if all parameters of the application were set.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="server.application.all_exception_handler">
+<code class="sig-prename descclassname"><span class="pre">server.application.</span></code><code class="sig-name descname"><span class="pre">all_exception_handler</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">error</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#server.application.all_exception_handler" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handles all exceptions.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="server.application.click">
+<code class="sig-prename descclassname"><span class="pre">server.application.</span></code><code class="sig-name descname"><span class="pre">click</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">link_id</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#server.application.click" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handles short-link click.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="server.application.create">
+<code class="sig-prename descclassname"><span class="pre">server.application.</span></code><code class="sig-name descname"><span class="pre">create</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#server.application.create" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates new short-link.</p>
+<p>Takes JSON object as an input, which should contain chat id as ‘chat_id’, word as ‘word’ and bot token hash as ‘token_hash’.</p>
+<p>Returns the ID of newly created link.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="server.application.get_top">
+<code class="sig-prename descclassname"><span class="pre">server.application.</span></code><code class="sig-name descname"><span class="pre">get_top</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">chat_id</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#server.application.get_top" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns pairs of (word, number of clicks) for top 5 clicked words for chat with ‘chat_id’.</p>
+<p>Takes optional parameter ‘date’. The result will be filtered for the time period, which includes date.
+If ‘date’ parameter is not provided it is defaulted to current date in UTC.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="server.application.initialize_app">
+<code class="sig-prename descclassname"><span class="pre">server.application.</span></code><code class="sig-name descname"><span class="pre">initialize_app</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">conn</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bot_token_hash</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">flask.app.Flask</span><a class="headerlink" href="#server.application.initialize_app" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns Flask application initialized with DB connection.</p>
+</dd></dl>
+
+</section>
+<section id="server-model">
+<h3><cite>server.model</cite><a class="headerlink" href="#server-model" title="Permalink to this headline">¶</a></h3>
+<span class="target" id="module-server.model"><span id="model-module"></span></span><p>This module contains functions to work with link DB.</p>
+<dl class="py function">
+<dt id="server.model._full_link">
+<code class="sig-prename descclassname"><span class="pre">server.model.</span></code><code class="sig-name descname"><span class="pre">_full_link</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">provider</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">word</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#server.model._full_link" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a website link for dictionary provider and word.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="server.model.create">
+<code class="sig-prename descclassname"><span class="pre">server.model.</span></code><code class="sig-name descname"><span class="pre">create</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">conn</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chat_id</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">word</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">provider</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">'jisho.org/search/'</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">str</span><a class="headerlink" href="#server.model.create" title="Permalink to this definition">¶</a></dt>
+<dd><p>Inserts new word in chat with id chat_id, returns id of the inserted word.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="server.model.get_words_with_clicks">
+<code class="sig-prename descclassname"><span class="pre">server.model.</span></code><code class="sig-name descname"><span class="pre">get_words_with_clicks</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">conn</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chat_id</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">current_date</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">datetime.date</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#server.model.get_words_with_clicks" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns top 5 most clicked words as pairs (word, clicks) for chat with chat_id
+and with start-end interval that includes current_date.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="server.model.handle_click">
+<code class="sig-prename descclassname"><span class="pre">server.model.</span></code><code class="sig-name descname"><span class="pre">handle_click</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">conn</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">link_id</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">str</span><a class="headerlink" href="#server.model.handle_click" title="Permalink to this definition">¶</a></dt>
+<dd><p>Increases click count for word with id link_id and returns full dictionary link to the word.</p>
+</dd></dl>
+
+</section>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Server API</a><ul>
+<li><a class="reference internal" href="#contents">Contents</a></li>
+<li><a class="reference internal" href="#description">Description</a><ul>
+<li><a class="reference internal" href="#server-application"><cite>server.application</cite></a></li>
+<li><a class="reference internal" href="#server-model"><cite>server.model</cite></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="BotClientApi.html"
+                        title="previous chapter">Telegram Bot client API</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/ServerApi.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="BotClientApi.html" title="Telegram Bot client API"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">lexibot 0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Server API</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2021, Dmitry Kozhevnikov, Aleksandr Khakhmovich.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.5.3.
+    </div>
+  </body>
+</html>
