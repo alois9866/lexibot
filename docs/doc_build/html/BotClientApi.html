@@ -1,0 +1,204 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17: http://docutils.sourceforge.net/" />
+
+    <title>Telegram Bot client API &#8212; lexibot 0 documentation</title>
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Server API" href="ServerApi.html" />
+    <link rel="prev" title="Welcome to lexibot’s documentation!" href="index.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="ServerApi.html" title="Server API"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Welcome to lexibot’s documentation!"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">lexibot 0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Telegram Bot client API</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="telegram-bot-client-api">
+<h1>Telegram Bot client API<a class="headerlink" href="#telegram-bot-client-api" title="Permalink to this headline">¶</a></h1>
+<section id="contents">
+<h2>Contents<a class="headerlink" href="#contents" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference internal" href="#telegram-bot-module">telegram bot module</a></p>
+<p><a class="reference internal" href="#parser-module">parser module</a></p>
+</section>
+<section id="description">
+<h2>Description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h2>
+<section id="bot-telegram-bot">
+<h3><cite>bot.telegram_bot</cite><a class="headerlink" href="#bot-telegram-bot" title="Permalink to this headline">¶</a></h3>
+<span class="target" id="module-bot.telegram_bot"><span id="telegram-bot-module"></span></span><p>This is a core module for Telegram bot version.</p>
+<p>Adjusts bot replies to user command/messages.</p>
+<dl class="py function">
+<dt id="bot.telegram_bot.echo_reply">
+<code class="sig-prename descclassname"><span class="pre">bot.telegram_bot.</span></code><code class="sig-name descname"><span class="pre">echo_reply</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">update</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">telegram.update.Update</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">telegram.ext.callbackcontext.CallbackContext</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="headerlink" href="#bot.telegram_bot.echo_reply" title="Permalink to this definition">¶</a></dt>
+<dd><p>Echo user message</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="bot.telegram_bot.help_reply">
+<code class="sig-prename descclassname"><span class="pre">bot.telegram_bot.</span></code><code class="sig-name descname"><span class="pre">help_reply</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">update</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">telegram.update.Update</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">context</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">telegram.ext.callbackcontext.CallbackContext</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="headerlink" href="#bot.telegram_bot.help_reply" title="Permalink to this definition">¶</a></dt>
+<dd><p>The reply action on user’s /help command</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="bot.telegram_bot.reply_japanese">
+<code class="sig-prename descclassname"><span class="pre">bot.telegram_bot.</span></code><code class="sig-name descname"><span class="pre">reply_japanese</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">update</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">telegram.update.Update</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">telegram.ext.callbackcontext.CallbackContext</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="headerlink" href="#bot.telegram_bot.reply_japanese" title="Permalink to this definition">¶</a></dt>
+<dd><p>Echo only japanese words</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="bot.telegram_bot.run">
+<code class="sig-prename descclassname"><span class="pre">bot.telegram_bot.</span></code><code class="sig-name descname"><span class="pre">run</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bot_token</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bot.telegram_bot.run" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function to activate Telegram bot custom behaviour</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>bot_token</strong> (<em>str</em>) – Telegram bot token</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>None</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>NoneType</p>
+</dd>
+</dl>
+<p>Usage:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">bot</span> <span class="kn">import</span> <span class="n">telegram_bot</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">token</span> <span class="o">=</span> <span class="s2">&quot;&lt;your_token&gt;&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">telegram_bot</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
+<span class="go">2021-04-11 13:27:50,212 - apscheduler.scheduler - INFO - Scheduler started</span>
+<span class="go">Talk to the bot here: t.me/&lt;name_of_the_bot_corresponding_to_the_token&gt;</span>
+<span class="go"> or inside Telegram application: @&lt;name_of_the_bot_corresponding_to_the_token&gt;</span>
+<span class="go">Press Ctrl+C to stop the bot...</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt id="bot.telegram_bot.start_reply">
+<code class="sig-prename descclassname"><span class="pre">bot.telegram_bot.</span></code><code class="sig-name descname"><span class="pre">start_reply</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">update</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">telegram.update.Update</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">context</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">telegram.ext.callbackcontext.CallbackContext</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="headerlink" href="#bot.telegram_bot.start_reply" title="Permalink to this definition">¶</a></dt>
+<dd><p>The reply action on user’s /start command</p>
+</dd></dl>
+
+</section>
+<section id="bot-parser">
+<h3><cite>bot.parser</cite><a class="headerlink" href="#bot-parser" title="Permalink to this headline">¶</a></h3>
+<span class="target" id="module-bot.parser"><span id="parser-module"></span></span><p>This is a module with text parsing methods</p>
+<dl class="py function">
+<dt id="bot.parser.extract_japanese_words">
+<code class="sig-prename descclassname"><span class="pre">bot.parser.</span></code><code class="sig-name descname"><span class="pre">extract_japanese_words</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><a class="headerlink" href="#bot.parser.extract_japanese_words" title="Permalink to this definition">¶</a></dt>
+<dd><p>Each non-japanese word is skipped. Japanese words are extracted.</p>
+<p>Japanese text has no whitespaces, that’s why tokenization is required</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="bot.parser.is_japanese_char">
+<code class="sig-prename descclassname"><span class="pre">bot.parser.</span></code><code class="sig-name descname"><span class="pre">is_japanese_char</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">symbol</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">bool</span><a class="headerlink" href="#bot.parser.is_japanese_char" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test whether character can be found in japanese text according to Unicode code</p>
+</dd></dl>
+
+</section>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Telegram Bot client API</a><ul>
+<li><a class="reference internal" href="#contents">Contents</a></li>
+<li><a class="reference internal" href="#description">Description</a><ul>
+<li><a class="reference internal" href="#bot-telegram-bot"><cite>bot.telegram_bot</cite></a></li>
+<li><a class="reference internal" href="#bot-parser"><cite>bot.parser</cite></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter">Welcome to lexibot’s documentation!</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="ServerApi.html"
+                        title="next chapter">Server API</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/BotClientApi.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="ServerApi.html" title="Server API"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Welcome to lexibot’s documentation!"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">lexibot 0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Telegram Bot client API</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2021, Dmitry Kozhevnikov, Aleksandr Khakhmovich.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.5.3.
+    </div>
+  </body>
+</html>
