@@ -15,7 +15,7 @@ write-deps:
 	pip freeze > requirements.txt
 
 run-local-server:
-	DBUSER=postgres DBPASSWORD=password DBHOST=127.0.0.1 python3 ./server/main.py
+	DBUSER=postgres DBPASSWORD=password DBHOST=127.0.0.1 BOT_TOKEN_HASH=2ef7674cc6723b5ab3f0bd43b22c66eb00a9ce58f50bcf9fbdf296628db0b8d1 python3 ./server/main.py
 
 run-local-db:
 	docker build -t lexibot-local-db --file local_db/Dockerfile .

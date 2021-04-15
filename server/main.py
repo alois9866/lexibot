@@ -17,6 +17,7 @@ HOST = '0.0.0.0'
 PORT = 80
 
 if __name__ == '__main__':
+    print("HOST", HOST, "PORT", PORT)
     user = os.environ.get(USER_VAR)
     if not user:
         sys.exit(USER_VAR + ' is not set')
@@ -36,7 +37,7 @@ if __name__ == '__main__':
     conn = psycopg2.connect(database="postgres", user=user, password=password, host=db_host, port="5432")
     try:
         app = application.initialize_app(conn, bot_token_hash)
-        print(f'Starting server at {HOST}:{PORT}')
+        print(f"Starting server at {HOST}:{PORT}")
         bjoern.run(app, HOST, PORT)
     finally:
         conn.close()
