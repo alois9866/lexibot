@@ -3,6 +3,10 @@ This is a core module for Telegram bot version.
 
 Adjusts bot replies to user command/messages.
 """
+import time
+import hashlib
+from typing import Dict, Union
+import requests
 
 from telegram.ext import CommandHandler, MessageHandler, Updater,\
     CallbackContext, Filters
@@ -11,10 +15,7 @@ from telegram import InlineKeyboardMarkup, InlineKeyboardButton
 from telegram import Bot, Message
 
 from bot.parser import extract_japanese_words
-
-import time
-import requests
-import hashlib
+from utils.logging import logger
 
 
 private_message_commands = ["help", "start", "echo"]
@@ -58,15 +59,15 @@ def reply_japanese(update: Update, _: CallbackContext) -> None:
 
 
 def run_pm(bot_token: str) -> None:
-    """Function to activate Telegram bot custom behaviour in private messages
+    """
+    Function to activate Telegram bot custom behaviour in private messages.
+    It is considered as test function to verify whether telegram responds properly.
 
     :param bot_token: Telegram bot token
     :type bot_token: str
     :return: None
-    :rtype: NoneType
 
-    Usage::
-
+    Usage:
         >>> from bot import telegram_bot
         >>> token = "<your_token>"
         >>> telegram_bot.run_pm(token)
@@ -90,27 +91,40 @@ def run_pm(bot_token: str) -> None:
         dispatcher.add_handler(umh)
 
     updater.start_polling()
-    print(f"Talk to the bot here: t.me/{updater.bot.username}\n"
-          f" or inside Telegram application: @{updater.bot.username}")
-    print("Press Ctrl+C to stop the bot...")
+    logger.info("Talk to the bot here: t.me/{name}\n"
+          " or inside Telegram application: @{name}".format(name=updater.bot.username))
+    logger.info("Press Ctrl+C to stop the bot...")
     updater.idle()
 
 def clear_bot_updates(bot: Bot) -> None:
+    """Clear pending updates from Telegram"""
     new_updates = bot.get_updates()
     if new_updates != []:
         new_id = new_updates[-1].update_id+1
         bot.get_updates(offset=new_id)
-        print("Pending updates clear")
+        logger.debug("Pending updates cleared")
     else:
-        print('No pending updates')
+        logger.debug('No pending updates')
 
 def send_word_links(bot: Bot,
                     channel_id: str,
                     message: Message,
                     server_ip: str ='0.0.0.0:80') -> None:
+    """
+    Reply to channel message by providing links to online dictionary
+    For every unique japanese word link is generated and sent to chat
+
+    :param bot: telegeram.Bot instance created via unique Telegram bot token
+    :param channel_id: `id` field to initialize telegram.Chat instance.
+        For private channels telegram.Chat can only be obtained by calling
+        telegram.User.get_chat(id=<id>) or telegram.Bot.get_chat(id=<id>)
+        for the users/bots - participants of the channel
+    :param message: telegram.Message instance which represents message in telegram channel
+    :param server_ip: server ip address + port. Bot will communicate with server using this info.
+    """
     text = message.text
     bot_token_hash = hashlib.sha256(bot.token.encode('utf-8')).hexdigest()
-    print(f'Bot hash {bot_token_hash}')
+    logger.debug('Bot hash {0}'.format(bot_token_hash))
     japanese_words = extract_japanese_words(text)
     if japanese_words == []:
         return
@@ -123,12 +137,13 @@ def send_word_links(bot: Bot,
     word_links = []
     link_generator = lambda id: f"http://{server_ip}/i/{id}"
     for jw in japanese_words:
-        print(f"Processing word {jw}")
+        logger.debug("Processing word {}".format(jw))
         word_data["word"] = jw
         resp = requests.post(url, json=word_data)
-        print(f'Response', f"status: {resp.status_code}",
-              f"content: {resp.text}", sep='\n\t')
+        logger.debug("\n\t".join(['Response', "status: {}".format(resp.status_code),
+                                  "content: {}".format(resp.text)]))
         word_id = resp.json()
+        assert isinstance(word_id, int)
         word_links.append(link_generator(word_id))
 
     reply_markup = []
@@ -143,45 +158,79 @@ def send_word_links(bot: Bot,
 def send_regular_report(bot: Bot,
                         channel_id: str,
                         server_ip: str ='0.0.0.0:80') -> None:
+    """Send regular report about user clicks on word links
+
+    :param bot: telegeram.Bot instance created via unique Telegram bot token
+    :param channel_id: `id` field to initialize telegram.Chat instance.
+        For private channels telegram.Chat can only be obtained by calling
+        telegram.User.get_chat(id=<id>) or telegram.Bot.get_chat(id=<id>)
+        for the users/bots - participants of the channel
+    :param server_ip: server ip address + port. Bot will communicate with server using this info.
+    """
+
     url = f"http://{server_ip}/top/{channel_id}"
     resp = requests.get(url)
-    print(f'Response', f"status: {resp.status_code}",
-          f"content: {resp.text}", sep='\n\t')
-    message_text = "Regular report on user clicks:\n"
-    for word_link,count in resp.json()["words"]:
-        word = word_link.split('/')[-1]
-        message_text += f"\t link for word `{word}` has been clicked {count} times so far\n"
-    bot.send_message(chat_id=channel_id, text=message_text)
+    logger.debug("\n\t".join(['Response', "status: {}".format(resp.status_code),
+                              "content: {}".format(resp.text)]))
+    word_info = resp.json()["words"]
+    if len(word_info) != 0:
+        message_text = "Regular report on user clicks:\n"
+        for word_link,count in resp.json()["words"]:
+            word = word_link.split('/')[-1]
+            message_text += f"\t link for word `{word}` has been clicked {count} times so far\n"
+        bot.send_message(chat_id=channel_id, text=message_text)
 
 
-def run_channel(bot_token: str, channel_id: str, server_ip: str ='0.0.0.0:80') -> None:
-    bot = Bot(token=bot_token)
+def run_channel(config: Dict[str,Union[str,Dict[str,str]]]) -> None:
+    """Function to activate Telegram bot custom behaviour in a channel
+    It runs endless while cycle, to terminate - press Ctrl+C
+
+    :param config: dictionary with parameters related to server and bot client
+    For details check README.md file in repo root
+    :return: None
+
+    Usage:
+        >>> import json
+        >>> from bot import telegram_bot
+        >>> with open('./utils/my_config.json', 'r') as rf:
+        ...     config = json.load(rf)
+        ...
+        >>> import logging
+        >>> logging.getLogger('lexibot').setLevel(logging.DEBUG) # or logging.INFO
+        >>> telegram_bot.run_channel(config)
+        telegram_bot.py:198 Starting up the <bot_username> bot custom behaviour...
+        telegram_bot.py:108 No pending updates
+        ...
+        ^Ctelegram_bot.py:219 Finishing custom bot behaviour.
+    """
+    bot = Bot(token=config["bot_token"])
     update_freq = 5
-    report_update_freq = 10
+    report_update_freq = 3600 * 24 # every 24hours, lower this value for debugging
     last_report_timestamp = time.time()
+    server_ip_port = f'{config["server"]["ip"]}:{config["server"]["port"]}'
     try:
-        print(f"Starting up the {bot.username} bot custom behaviour...")
+        logger.info("Starting up the {0} bot custom behaviour...".format(bot.username))
         clear_bot_updates(bot)
         while True:
             time.sleep(update_freq)
             updates = bot.get_updates()
             if time.time() - last_report_timestamp > report_update_freq:
-                send_regular_report(bot, channel_id)
+                send_regular_report(bot, config["channel_id"], server_ip_port)
                 last_report_timestamp = time.time()
             if updates == []:
                 continue
             for upd in updates:
                 message = upd.channel_post
                 if message is not None:
-                    # print(message.chat_id, channel_id)
-                    if message.chat_id == channel_id:
-                        send_word_links(bot, channel_id, message)
+                    logger.debug([message.chat_id, config["channel_id"]])
+                    if str(message.chat_id) == config["channel_id"]:
+                        send_word_links(bot, config["channel_id"], message, server_ip_port)
 
             # the following method clears the queue of all previous updates
             clear_bot_updates(bot)
     except KeyboardInterrupt:
         pass
-    print('Finishing custom bot behaviour.')
+    logger.info('Finishing custom bot behaviour.')
 
 if __name__ == "__main__":
     pass
