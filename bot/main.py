@@ -18,12 +18,11 @@ def main():
                         required=False, action='store_true',
                         help="\twhether to print debug messages from logger")
     args = parser.parse_args()
+    assert args.config_path, '--config_path is not provided.'
     with open(args.config_path, "r") as rf:
         config = json.load(rf)
-    assert "bot_token" in config, "You have to provide Telegram token"
-    assert "channel_id" in config,\
-        "You have to provide id of Telegram channel bot needs to work with"
-    assert "server" in config,\
+    assert "token" in config, "You have to provide Telegram token"
+    assert "server" in config, \
         "You have to provide server ip address bot interacts with"
     logger.setLevel(logging.DEBUG if args.verbosity else logging.INFO)
     telegram_bot.run_channel(config=config)

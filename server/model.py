@@ -25,7 +25,7 @@ def create(conn, chat_id: str, word: str, provider: str = JISHO_URL) -> str:
 
     tx = conn.cursor()
     try:
-        tx.execute(r'select id from links where word=%s and chat_id=%s and start_date <= %s and end_date >= %s;', (word, chat_id, start_date, end_date))
+        tx.execute(r"select id from links where word=%s and chat_id='%s' and start_date <= %s and end_date >= %s;", (word, chat_id, start_date, end_date))
         row = tx.fetchone()
         if row:
             return row[0]
