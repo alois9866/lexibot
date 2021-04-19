@@ -45,14 +45,7 @@ Also prepare json configuration file with the following format:
 ```json
 {
     "token": "<provide_your_token_here>",
-    "channel_id": "<provide_here_id_of_the_channel_bot_needs_to_work_with>",
     "server": {
-        "ip": "<ip>",
-        "port": "<port>"
-    },
-    "db": {
-        "user": "postgres",
-        "password": "password",
         "ip": "<ip>",
         "port": "<port>"
     }
