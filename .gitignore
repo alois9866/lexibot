@@ -131,7 +131,7 @@ dmypy.json
 .pyre/
 
 # Prevent accidential change!
-bot/config.json
+config.json
 
 # Local .terraform directories
 **/.terraform/*

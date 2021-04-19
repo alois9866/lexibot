@@ -79,10 +79,11 @@ def get_top(chat_id: str):
         date = datetime.datetime.strptime(date, '%Y-%m-%d').date()
 
     pairs = model.get_words_with_clicks(_dbConnection, chat_id, date)
-    return json.dumps({'words': pairs})
+    return json.dumps({'words': pairs}, ensure_ascii=False)
 
 
 @_app.errorhandler(Exception)
 def all_exception_handler(error):
     """Handles all exceptions."""
+    print('ERROR', error)
     return f'Error: {error}', 500

@@ -15,9 +15,14 @@ write-deps:
 	pip freeze > requirements.txt
 
 run-local-server:
-	DBUSER=postgres DBPASSWORD=password DBHOST=127.0.0.1 python3 ./server/main.py
+	@echo Running in DEBUG mode, do not use in production!
+	DBUSER=postgres DBPASSWORD=password DBHOST=0.0.0.0 python3 ./server/main.py -cp ${CONFIG_PATH}
+
+run-client:
+	python -m bot.main -v -cp ${CONFIG_PATH}
 
 run-local-db:
+	@echo Running in DEBUG mode, do not use in production!
 	docker build -t lexibot-local-db --file local_db/Dockerfile .
 	docker run --rm -p 5432:5432 --name lexibot-postgres -e POSTGRES_PASSWORD=password -d lexibot-local-db
 
@@ -25,4 +30,4 @@ stop-local-db:
 	docker stop $(shell docker ps -a -q --filter="name=lexibot-postgres")
 
 doc_html:
-	sphinx-build -M html "./docs"/source "./docs/doc_build"
+	sphinx-build -M html "./docs/source" "./docs/doc_build"

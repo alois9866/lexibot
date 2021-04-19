@@ -1,6 +1,0 @@
-{
-    "bot_type": "telegram",
-    "telegram": {
-        "token": "<provide_your_token_here>"
-    }
-}

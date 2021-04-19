@@ -77,9 +77,41 @@
 </dd></dl>
 
 <dl class="py function">
-<dt id="bot.telegram_bot.run">
-<code class="sig-prename descclassname"><span class="pre">bot.telegram_bot.</span></code><code class="sig-name descname"><span class="pre">run</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bot_token</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#bot.telegram_bot.run" title="Permalink to this definition">¶</a></dt>
-<dd><p>Function to activate Telegram bot custom behaviour</p>
+<dt id="bot.telegram_bot.run_channel">
+<code class="sig-prename descclassname"><span class="pre">bot.telegram_bot.</span></code><code class="sig-name descname"><span class="pre">run_channel</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="headerlink" href="#bot.telegram_bot.run_channel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function to activate Telegram bot custom behaviour in a channel
+It runs endless while cycle, to terminate - press Ctrl+C</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>config</strong> – dictionary with parameters related to server and bot client</p>
+</dd>
+</dl>
+<p>For details check README.md file in repo root
+:return: None</p>
+<dl>
+<dt>Usage:</dt><dd><div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">json</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">bot</span> <span class="kn">import</span> <span class="n">telegram_bot</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;./utils/my_config.json&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">rf</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="n">config</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">rf</span><span class="p">)</span>
+<span class="gp">...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">logging</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s1">&#39;lexibot&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">)</span> <span class="c1"># or logging.INFO</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">telegram_bot</span><span class="o">.</span><span class="n">run_channel</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+<span class="go">telegram_bot.py:198 Starting up the &lt;bot_username&gt; bot custom behaviour...</span>
+<span class="go">telegram_bot.py:108 No pending updates</span>
+<span class="gp">...</span>
+<span class="go">^Ctelegram_bot.py:219 Finishing custom bot behaviour.</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="bot.telegram_bot.run_pm">
+<code class="sig-prename descclassname"><span class="pre">bot.telegram_bot.</span></code><code class="sig-name descname"><span class="pre">run_pm</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bot_token</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="headerlink" href="#bot.telegram_bot.run_pm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function to activate Telegram bot custom behaviour in private messages.
+It is considered as test function to verify whether telegram responds properly.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>bot_token</strong> (<em>str</em>) – Telegram bot token</p>
@@ -87,20 +119,57 @@
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>None</p>
 </dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>NoneType</p>
-</dd>
 </dl>
-<p>Usage:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">bot</span> <span class="kn">import</span> <span class="n">telegram_bot</span>
+<dl>
+<dt>Usage:</dt><dd><div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">bot</span> <span class="kn">import</span> <span class="n">telegram_bot</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">token</span> <span class="o">=</span> <span class="s2">&quot;&lt;your_token&gt;&quot;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">telegram_bot</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">telegram_bot</span><span class="o">.</span><span class="n">run_pm</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
 <span class="go">2021-04-11 13:27:50,212 - apscheduler.scheduler - INFO - Scheduler started</span>
 <span class="go">Talk to the bot here: t.me/&lt;name_of_the_bot_corresponding_to_the_token&gt;</span>
 <span class="go"> or inside Telegram application: @&lt;name_of_the_bot_corresponding_to_the_token&gt;</span>
 <span class="go">Press Ctrl+C to stop the bot...</span>
 </pre></div>
 </div>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="bot.telegram_bot.send_regular_report">
+<code class="sig-prename descclassname"><span class="pre">bot.telegram_bot.</span></code><code class="sig-name descname"><span class="pre">send_regular_report</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bot</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">telegram.bot.Bot</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">channel_id</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">server_ip</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">'0.0.0.0:80'</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="headerlink" href="#bot.telegram_bot.send_regular_report" title="Permalink to this definition">¶</a></dt>
+<dd><p>Send regular report about user clicks on word links</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>bot</strong> – telegeram.Bot instance created via unique Telegram bot token</p></li>
+<li><p><strong>channel_id</strong> – <cite>id</cite> field to initialize telegram.Chat instance.
+For private channels telegram.Chat can only be obtained by calling
+telegram.User.get_chat(id=&lt;id&gt;) or telegram.Bot.get_chat(id=&lt;id&gt;)
+for the users/bots - participants of the channel</p></li>
+<li><p><strong>server_ip</strong> – server ip address + port. Bot will communicate with server using this info.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="bot.telegram_bot.send_word_links">
+<code class="sig-prename descclassname"><span class="pre">bot.telegram_bot.</span></code><code class="sig-name descname"><span class="pre">send_word_links</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bot</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">telegram.bot.Bot</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">channel_id</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">message</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">telegram.message.Message</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">server_ip</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">'0.0.0.0:80'</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="headerlink" href="#bot.telegram_bot.send_word_links" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reply to channel message by providing links to online dictionary
+For every unique japanese word link is generated and sent to chat</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>bot</strong> – telegeram.Bot instance created via unique Telegram bot token</p></li>
+<li><p><strong>channel_id</strong> – <cite>id</cite> field to initialize telegram.Chat instance.
+For private channels telegram.Chat can only be obtained by calling
+telegram.User.get_chat(id=&lt;id&gt;) or telegram.Bot.get_chat(id=&lt;id&gt;)
+for the users/bots - participants of the channel</p></li>
+<li><p><strong>message</strong> – telegram.Message instance which represents message in telegram channel</p></li>
+<li><p><strong>server_ip</strong> – server ip address + port. Bot will communicate with server using this info.</p></li>
+</ul>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py function">
