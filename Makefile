@@ -19,7 +19,7 @@ run-local-server:
 	DBUSER=postgres DBPASSWORD=password DBHOST=0.0.0.0 python3 ./server/main.py -cp ${CONFIG_PATH}
 
 run-client:
-	python -m bot.main -cp ${CONFIG_PATH}
+	python -m bot.main -v -cp ${CONFIG_PATH}
 
 run-local-db:
 	@echo Running in DEBUG mode, do not use in production!

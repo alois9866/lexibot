@@ -58,7 +58,6 @@ Also prepare json configuration file with the following format:
 You will need a valid docker installation to run the database for the local server. If you want to configure the
 database manually, see TODO.
 
-1. Set db `ip` to 0.0.0.0 and `port` to 5432 in config file 
 1. Set server `ip` to 0.0.0.0 and `port` to 80 in config file.
 1. In order to prepare a database for lexibot server, execute `make run-local-db`
 1. To run a local server, execute `make run-local-server CONFIG_PATH=<path_to_config_file>`

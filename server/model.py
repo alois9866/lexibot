@@ -14,10 +14,13 @@ def create(conn, chat_id: str, word: str, provider: str = JISHO_URL) -> str:
     """Inserts new word in chat with id chat_id, returns id of the inserted word."""
     if not chat_id:
         raise ValueError('chat_id is empty')
+    chat_id = str(chat_id)
     if not word:
         raise ValueError('word is empty')
+    word = str(word)
     if not provider:
         raise ValueError('provider is empty')
+    provider = str(provider)
 
     now = datetime.datetime.utcnow().date()
     start_date = now - datetime.timedelta(days=now.weekday())  # Start of the current week — Monday.
@@ -25,7 +28,7 @@ def create(conn, chat_id: str, word: str, provider: str = JISHO_URL) -> str:
 
     tx = conn.cursor()
     try:
-        tx.execute(r"select id from links where word=%s and chat_id='%s' and start_date <= %s and end_date >= %s;", (word, chat_id, start_date, end_date))
+        tx.execute(r"select id from links where word=%s and chat_id=%s and start_date <= %s and end_date >= %s;", (word, chat_id, start_date, end_date))
         row = tx.fetchone()
         if row:
             return row[0]
@@ -46,6 +49,8 @@ def create(conn, chat_id: str, word: str, provider: str = JISHO_URL) -> str:
 # todo: Consider limiting clicks from one user somehow.
 def handle_click(conn, link_id: int) -> str:
     """Increases click count for word with id link_id and returns full dictionary link to the word."""
+    link_id = int(link_id)
+
     current_date = datetime.datetime.utcnow().date()
 
     tx = conn.cursor()
@@ -76,6 +81,8 @@ def get_words_with_clicks(conn, chat_id: str, current_date: datetime.date):
     Returns top 5 most clicked words as pairs (word, clicks) for chat with chat_id
     and with start-end interval that includes current_date.
     """
+    chat_id = str(chat_id)
+
     tx = conn.cursor()
     try:
         tx.execute("""select word, provider, clicks from links

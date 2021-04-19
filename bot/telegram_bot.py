@@ -143,6 +143,7 @@ def send_word_links(bot: Bot,
         resp = requests.post(url, json=word_data)
         logger.debug("\n\t".join(['Response', "status: {}".format(resp.status_code),
                                   "content: {}".format(resp.text)]))
+        # TODO: Will crash if server returns error.
         word_id = resp.json()
         assert isinstance(word_id, int)
         word_links.append(link_generator(word_id))
@@ -175,10 +176,10 @@ def send_regular_report(bot: Bot,
                               "content: {}".format(resp.text)]))
     word_info = resp.json()["words"]
     if len(word_info) != 0:
-        message_text = "Regular report on user clicks:\n"
+        message_text = "Most popular words:\n"
         for word_link, count in resp.json()["words"]:
             word = word_link.split('/')[-1]
-            message_text += f"\t link for word `{word}` has been clicked {count} times so far\n"
+            message_text += f"\t- `{word}` was clicked {count} times this week.\n"
         bot.send_message(chat_id=channel_id, text=message_text)
 
 
@@ -208,7 +209,7 @@ def run_channel(config: Dict[str, Union[str, Dict[str, str]]]) -> None:
     registered_chats = {}
 
     update_freq = 5  # sec
-    report_update_freq = 3600 * 24 * 7  # 1 week
+    report_update_freq = 30  # 1 week
 
     last_report_timestamp = time.time()
     server_ip_port = f'{config["server"]["ip"]}:{config["server"]["port"]}'
@@ -216,27 +217,32 @@ def run_channel(config: Dict[str, Union[str, Dict[str, str]]]) -> None:
         logger.info("Starting up the {0} bot custom behaviour...".format(bot.username))
         clear_bot_updates(bot)
         while True:
-            time.sleep(update_freq)
+            try:
+                time.sleep(update_freq)
 
-            if time.time() - last_report_timestamp > report_update_freq:
-                for chat in registered_chats:
-                    send_regular_report(bot, chat, server_ip_port)
-                    last_report_timestamp = time.time()
+                if time.time() - last_report_timestamp > report_update_freq:
+                    for chat in registered_chats:
+                        send_regular_report(bot, chat, server_ip_port)
+                        last_report_timestamp = time.time()
 
-            updates = bot.get_updates()
-            if not updates:
-                continue
-            for upd in updates:
-                message = upd.channel_post
-                if message is not None:
-                    chat_id = message.chat_id
-                    if not registered_chats.get(chat_id):
-                        registered_chats[chat_id] = True
-                    logger.debug([chat_id, message.text])
-                    send_word_links(bot, chat_id, message, server_ip_port)
+                updates = bot.get_updates()
+                if not updates:
+                    continue
+                for upd in updates:
+                    message = upd.channel_post
+                    if message is not None:
+                        chat_id = message.chat_id
+                        if not registered_chats.get(chat_id):
+                            registered_chats[chat_id] = True
+                        logger.debug([chat_id, message.text])
+                        send_word_links(bot, chat_id, message, server_ip_port)
 
-            # the following method clears the queue of all previous updates
-            clear_bot_updates(bot)
+                clear_bot_updates(bot)
+            except KeyboardInterrupt:
+                raise
+            except Exception as e:
+                logger.error(e)
+                clear_bot_updates(bot)
     except KeyboardInterrupt:
         pass
     logger.info('Finishing custom bot behaviour.')
