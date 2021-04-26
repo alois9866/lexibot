@@ -5,7 +5,9 @@ Adjusts bot replies to user command/messages.
 """
 import hashlib
 import time
+import logging
 from typing import Dict, Union
+# from gettext import ngettext
 
 import requests
 from telegram import Bot, Message
@@ -15,25 +17,25 @@ from telegram.ext import CommandHandler, MessageHandler, Updater, \
 from telegram.update import Update
 
 from bot.parser import extract_japanese_words
-from utils.logging import logger
+logger = logging.getLogger('lexibot')
 
-private_message_commands = ["help", "start", "echo"]
+private_message_commands = ['help', 'start', 'echo']
 
 
 def start_reply(update: Update, context: CallbackContext) -> None:
     """The reply action on user's /start command"""
-    context.bot.send_message(chat_id=update.effective_chat.id,
-                             text=f"Hello, my name is {context.bot.first_name}. "
-                                  "I am a bot. "
-                                  "You can type `/help` to know me better...")
+    context.bot.send_message(
+        chat_id=update.effective_chat.id,
+        text=_("Hello, my name is {}. "
+             "I am a bot. "
+             "You can type `/help` to know me better...").format(context.bot.first_name))
 
 
 def help_reply(update: Update, context: CallbackContext) -> None:
     """The reply action on user's /help command"""
-    text = ("Info:\n"
-            "You can use the following commands:\n")
+    text = (_("Info:\nYou can use the following commands:\n"))
     for auc in private_message_commands:
-        text += f"\t`/{auc}`\n"
+        text += '\t`/{}`\n'.format(auc)
     context.bot.send_message(chat_id=update.effective_chat.id,
                              text=text)
 
@@ -43,17 +45,13 @@ def echo_reply(update: Update, _: CallbackContext) -> None:
     text = update.message.text
     answer = ' '.join(text.split(' ')[1:])
     update.message.reply_text(answer)
-    update.message.reply_text('Check this link:',
-                              reply_markup=InlineKeyboardMarkup([
-                                  [InlineKeyboardButton(text='link', url='https://yandex.ru')]
-                              ]))
 
 
 def reply_japanese(update: Update, _: CallbackContext) -> None:
     """Echo only japanese words"""
     if update.message is not None:
         text = update.message.text
-        answer = f'Japanese words: {extract_japanese_words(text)}'
+        answer = _("Japanese words: {}").format(extract_japanese_words(text))
         update.message.reply_text(answer)
 
 
@@ -80,7 +78,7 @@ def run_pm(bot_token: str) -> None:
     user_command_handlers = [
         CommandHandler('start', start_reply),
         CommandHandler('help', help_reply),
-        CommandHandler("echo", echo_reply),
+        CommandHandler('echo', echo_reply),
     ]
     for uch in user_command_handlers:
         dispatcher.add_handler(uch)
@@ -90,9 +88,9 @@ def run_pm(bot_token: str) -> None:
         dispatcher.add_handler(umh)
 
     updater.start_polling()
-    logger.info("Talk to the bot here: t.me/{name}\n"
-                " or inside Telegram application: @{name}".format(name=updater.bot.username))
-    logger.info("Press Ctrl+C to stop the bot...")
+    logger.info(_("Talk to the bot here: t.me/{0}\n"
+                " or inside Telegram application: @{0}").format(updater.bot.username))
+    logger.info(_("Press Ctrl+C to stop the bot..."))
     updater.idle()
 
 
@@ -102,9 +100,9 @@ def clear_bot_updates(bot: Bot) -> None:
     if new_updates != []:
         new_id = new_updates[-1].update_id + 1
         bot.get_updates(offset=new_id)
-        logger.debug("Pending updates cleared")
+        logger.debug(_("Cleared pending updates for the bot"))
     else:
-        logger.debug('No pending updates')
+        logger.debug(_("No pending updates for the bot"))
 
 
 def send_word_links(bot: Bot,
@@ -125,7 +123,7 @@ def send_word_links(bot: Bot,
     """
     text = message.text
     bot_token_hash = hashlib.sha256(bot.token.encode('utf-8')).hexdigest()
-    logger.debug('Bot hash {0}'.format(bot_token_hash))
+    logger.debug(_("Bot hash {0}").format(bot_token_hash))
     japanese_words = extract_japanese_words(text)
     if japanese_words == []:
         return
@@ -134,15 +132,15 @@ def send_word_links(bot: Bot,
         "word": None,
         "token_hash": bot_token_hash
     }
-    url = f"http://{server_ip}/create"
+    url = f'http://{server_ip}/create'
     word_links = []
-    link_generator = lambda id: f"http://{server_ip}/i/{id}"
+    link_generator = lambda id: f'http://{server_ip}/i/{id}'
     for jw in japanese_words:
-        logger.debug("Processing word {}".format(jw))
-        word_data["word"] = jw
+        logger.debug(_("Processing word {}").format(jw))
+        word_data['word'] = jw
         resp = requests.post(url, json=word_data)
-        logger.debug("\n\t".join(['Response', "status: {}".format(resp.status_code),
-                                  "content: {}".format(resp.text)]))
+        logger.debug(_("Response \n\tstatus: {} \n\tcontent: {}").format(
+            resp.status_code, resp.text))
         # TODO: Will crash if server returns error.
         word_id = resp.json()
         assert isinstance(word_id, int)
@@ -153,7 +151,7 @@ def send_word_links(bot: Bot,
         reply_markup.append([InlineKeyboardButton(text=word, url=link)])
 
     bot.send_message(channel_id,
-                     text='Check out word translations:',
+                     text=_("Check out word translations:"),
                      reply_markup=InlineKeyboardMarkup(reply_markup))
 
 
@@ -170,16 +168,18 @@ def send_regular_report(bot: Bot,
     :param server_ip: server ip address + port. Bot will communicate with server using this info.
     """
 
-    url = f"http://{server_ip}/top/{channel_id}"
+    url = f'http://{server_ip}/top/{channel_id}'
     resp = requests.get(url)
-    logger.debug("\n\t".join(['Response', "status: {}".format(resp.status_code),
-                              "content: {}".format(resp.text)]))
-    word_info = resp.json()["words"]
+    logger.debug(_("Response \n\tstatus: {} \n\tcontent: {}").format(
+        resp.status_code, resp.text))
+    word_info = resp.json()['words']
     if len(word_info) != 0:
-        message_text = "Most popular words:\n"
-        for word_link, count in resp.json()["words"]:
+        message_text = _("Most popular words:\n")
+        for word_link, count in resp.json()['words']:
             word = word_link.split('/')[-1]
-            message_text += f"\t- `{word}` was clicked {count} times this week.\n"
+            message_text += _("\t- `{}` was clicked {} ").format(word, count)
+            message_text += ngettext("time", "times", count)
+            message_text += _(" this week") + "\n"
         bot.send_message(chat_id=channel_id, text=message_text)
 
 
@@ -205,16 +205,17 @@ def run_channel(config: Dict[str, Union[str, Dict[str, str]]]) -> None:
         ...
         ^Ctelegram_bot.py:219 Finishing custom bot behaviour.
     """
-    bot = Bot(token=config["token"])
+    bot = Bot(token=config['token'])
     registered_chats = {}
 
     update_freq = 5  # sec
     report_update_freq = 30  # 1 week
 
     last_report_timestamp = time.time()
-    server_ip_port = f'{config["server"]["ip"]}:{config["server"]["port"]}'
+    server_ip_port = '{}:{}'.format(config['server']['ip'],
+                                    config['server']['port'])
     try:
-        logger.info("Starting up the {0} bot custom behaviour...".format(bot.username))
+        logger.info(_("Starting up the {} bot custom behaviour...").format(bot.username))
         clear_bot_updates(bot)
         while True:
             try:
@@ -245,7 +246,7 @@ def run_channel(config: Dict[str, Union[str, Dict[str, str]]]) -> None:
                 clear_bot_updates(bot)
     except KeyboardInterrupt:
         pass
-    logger.info('Finishing custom bot behaviour.')
+    logger.info(_("Finishing custom bot behaviour."))
 
 
 if __name__ == "__main__":

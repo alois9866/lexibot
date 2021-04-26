@@ -28,7 +28,7 @@ def initialize_app(conn, bot_token_hash) -> flask.Flask:
 def click(link_id: int):
     """Handles short-link click."""
     if not _initialized():
-        return 'Not started.', 500
+        return _('Not started.'), 500
 
     full_link = model.handle_click(_dbConnection, link_id)
     return flask.redirect(full_link)
@@ -44,19 +44,19 @@ def create():
     Returns the ID of newly created link.
     """
     if not _initialized():
-        return 'Not started.', 500
+        return _('Not started.'), 500
     if not flask.request.is_json:
-        return 'Request not in JSON format', 400
+        return _('Request not in JSON format'), 400
 
     data = flask.request.get_json()
     if not data:
-        return 'No valid input provided', 401
+        return _('No valid input provided'), 401
 
     token_hash = data.get('token_hash')
     if not token_hash:
-        return 'No bot token hash provided', 401
+        return _('No bot token hash provided'), 401
     if token_hash != _bot_token_hash:
-        return 'Incorrect bot token hash', 401
+        return _('Incorrect bot token hash'), 401
 
     return str(model.create(_dbConnection, data.get('chat_id'), data.get('word')))
 
@@ -70,7 +70,7 @@ def get_top(chat_id: str):
     If 'date' parameter is not provided it is defaulted to current date in UTC.
     """
     if not chat_id:
-        return 'No chat ID provided', 401
+        return _('No chat ID provided'), 401
 
     date = flask.request.args.get('date')
     if not date:
@@ -85,5 +85,5 @@ def get_top(chat_id: str):
 @_app.errorhandler(Exception)
 def all_exception_handler(error):
     """Handles all exceptions."""
-    print('ERROR', error)
-    return f'Error: {error}', 500
+    print(_('ERROR'), error)
+    return _('Error: {}').format(error), 500

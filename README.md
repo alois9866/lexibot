@@ -70,6 +70,8 @@ python -m bot.main -cp <path_to_config_file>
 ```
 Set additional `-v` flag, if you want to see debugging logs.
 
+Specify `LANGUAGE=ru` (or `en`) in the beggining of the command to use localization.
+
 ### Run a server in the cloud
 
 TODO
@@ -83,3 +85,22 @@ TODO
 Make sure you have [Sphinx](https://www.sphinx-doc.org) package installed.
 Execute `make doc_html` and open _docs/doc_build/html/index.html_
 in a browser.
+
+### Update localization specs
+```shell script
+## `ru` and `en` locales are supported. Example for `ru`:
+
+# extract strings to translate from the code
+pybabel extract -o l10n/lexibot.pot <path_to_module1> <path_to_module2> ... 
+
+# init or update translation pot file
+# init:
+pybabel init -D lexibot -i l10n/lexibot.pot -l ru -d l10n
+# update:
+pybabel update -D lexibot -i l10n/lexibot.pot -l ru -d l10n
+
+# then open l10n/ru/LC_MESSAGES/lexibot.po and update the translation here
+# finally create binary file which will be used my the program
+pybabel compile -D lexibot -i l10n/ru/LC_MESSAGES/lexibot.po -o l10n/ru/LC_MESSAGES/lexibot.mo
+```
+
