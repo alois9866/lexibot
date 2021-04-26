@@ -85,4 +85,5 @@ def get_top(chat_id: str):
 @_app.errorhandler(Exception)
 def all_exception_handler(error):
     """Handles all exceptions."""
+    print('ERROR', error)
     return f'Error: {error}', 500

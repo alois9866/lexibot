@@ -3,20 +3,19 @@ This is a core module for Telegram bot version.
 
 Adjusts bot replies to user command/messages.
 """
-import time
 import hashlib
+import time
 from typing import Dict, Union
-import requests
 
-from telegram.ext import CommandHandler, MessageHandler, Updater,\
+import requests
+from telegram import Bot, Message
+from telegram import InlineKeyboardMarkup, InlineKeyboardButton
+from telegram.ext import CommandHandler, MessageHandler, Updater, \
     CallbackContext, Filters
 from telegram.update import Update
-from telegram import InlineKeyboardMarkup, InlineKeyboardButton
-from telegram import Bot, Message
 
 from bot.parser import extract_japanese_words
 from utils.logging import logger
-
 
 private_message_commands = ["help", "start", "echo"]
 
@@ -25,8 +24,8 @@ def start_reply(update: Update, context: CallbackContext) -> None:
     """The reply action on user's /start command"""
     context.bot.send_message(chat_id=update.effective_chat.id,
                              text=f"Hello, my name is {context.bot.first_name}. "
-                             "I am a bot. "
-                             "You can type `/help` to know me better...")
+                                  "I am a bot. "
+                                  "You can type `/help` to know me better...")
 
 
 def help_reply(update: Update, context: CallbackContext) -> None:
@@ -92,24 +91,26 @@ def run_pm(bot_token: str) -> None:
 
     updater.start_polling()
     logger.info("Talk to the bot here: t.me/{name}\n"
-          " or inside Telegram application: @{name}".format(name=updater.bot.username))
+                " or inside Telegram application: @{name}".format(name=updater.bot.username))
     logger.info("Press Ctrl+C to stop the bot...")
     updater.idle()
+
 
 def clear_bot_updates(bot: Bot) -> None:
     """Clear pending updates from Telegram"""
     new_updates = bot.get_updates()
     if new_updates != []:
-        new_id = new_updates[-1].update_id+1
+        new_id = new_updates[-1].update_id + 1
         bot.get_updates(offset=new_id)
         logger.debug("Pending updates cleared")
     else:
         logger.debug('No pending updates')
 
+
 def send_word_links(bot: Bot,
                     channel_id: str,
                     message: Message,
-                    server_ip: str ='0.0.0.0:80') -> None:
+                    server_ip: str = '0.0.0.0:80') -> None:
     """
     Reply to channel message by providing links to online dictionary
     For every unique japanese word link is generated and sent to chat
@@ -142,22 +143,23 @@ def send_word_links(bot: Bot,
         resp = requests.post(url, json=word_data)
         logger.debug("\n\t".join(['Response', "status: {}".format(resp.status_code),
                                   "content: {}".format(resp.text)]))
+        # TODO: Will crash if server returns error.
         word_id = resp.json()
         assert isinstance(word_id, int)
         word_links.append(link_generator(word_id))
 
     reply_markup = []
-    for word,link in zip(japanese_words, word_links):
-        reply_markup.append([InlineKeyboardButton(text=f"for word `{word}`", url=link)])
+    for word, link in zip(japanese_words, word_links):
+        reply_markup.append([InlineKeyboardButton(text=word, url=link)])
 
     bot.send_message(channel_id,
-                     text='Check out word translations via the following links:',
+                     text='Check out word translations:',
                      reply_markup=InlineKeyboardMarkup(reply_markup))
 
 
 def send_regular_report(bot: Bot,
                         channel_id: str,
-                        server_ip: str ='0.0.0.0:80') -> None:
+                        server_ip: str = '0.0.0.0:80') -> None:
     """Send regular report about user clicks on word links
 
     :param bot: telegeram.Bot instance created via unique Telegram bot token
@@ -174,14 +176,14 @@ def send_regular_report(bot: Bot,
                               "content: {}".format(resp.text)]))
     word_info = resp.json()["words"]
     if len(word_info) != 0:
-        message_text = "Regular report on user clicks:\n"
-        for word_link,count in resp.json()["words"]:
+        message_text = "Most popular words:\n"
+        for word_link, count in resp.json()["words"]:
             word = word_link.split('/')[-1]
-            message_text += f"\t link for word `{word}` has been clicked {count} times so far\n"
+            message_text += f"\t- `{word}` was clicked {count} times this week.\n"
         bot.send_message(chat_id=channel_id, text=message_text)
 
 
-def run_channel(config: Dict[str,Union[str,Dict[str,str]]]) -> None:
+def run_channel(config: Dict[str, Union[str, Dict[str, str]]]) -> None:
     """Function to activate Telegram bot custom behaviour in a channel
     It runs endless while cycle, to terminate - press Ctrl+C
 
@@ -203,34 +205,48 @@ def run_channel(config: Dict[str,Union[str,Dict[str,str]]]) -> None:
         ...
         ^Ctelegram_bot.py:219 Finishing custom bot behaviour.
     """
-    bot = Bot(token=config["bot_token"])
-    update_freq = 5
-    report_update_freq = 3600 * 24 # every 24hours, lower this value for debugging
+    bot = Bot(token=config["token"])
+    registered_chats = {}
+
+    update_freq = 5  # sec
+    report_update_freq = 30  # 1 week
+
     last_report_timestamp = time.time()
     server_ip_port = f'{config["server"]["ip"]}:{config["server"]["port"]}'
     try:
         logger.info("Starting up the {0} bot custom behaviour...".format(bot.username))
         clear_bot_updates(bot)
         while True:
-            time.sleep(update_freq)
-            updates = bot.get_updates()
-            if time.time() - last_report_timestamp > report_update_freq:
-                send_regular_report(bot, config["channel_id"], server_ip_port)
-                last_report_timestamp = time.time()
-            if updates == []:
-                continue
-            for upd in updates:
-                message = upd.channel_post
-                if message is not None:
-                    logger.debug([message.chat_id, config["channel_id"]])
-                    if str(message.chat_id) == config["channel_id"]:
-                        send_word_links(bot, config["channel_id"], message, server_ip_port)
+            try:
+                time.sleep(update_freq)
 
-            # the following method clears the queue of all previous updates
-            clear_bot_updates(bot)
+                if time.time() - last_report_timestamp > report_update_freq:
+                    for chat in registered_chats:
+                        send_regular_report(bot, chat, server_ip_port)
+                        last_report_timestamp = time.time()
+
+                updates = bot.get_updates()
+                if not updates:
+                    continue
+                for upd in updates:
+                    message = upd.channel_post
+                    if message is not None:
+                        chat_id = message.chat_id
+                        if not registered_chats.get(chat_id):
+                            registered_chats[chat_id] = True
+                        logger.debug([chat_id, message.text])
+                        send_word_links(bot, chat_id, message, server_ip_port)
+
+                clear_bot_updates(bot)
+            except KeyboardInterrupt:
+                raise
+            except Exception as e:
+                logger.error(e)
+                clear_bot_updates(bot)
     except KeyboardInterrupt:
         pass
     logger.info('Finishing custom bot behaviour.')
+
 
 if __name__ == "__main__":
     pass
