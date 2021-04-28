@@ -1,14 +1,15 @@
 """This module is the main module of lexibot client, the bot."""
 
 import argparse
+import gettext
 import json
 import logging
-from pathlib import Path
 import sys
-import gettext
+from pathlib import Path
 
 from bot import telegram_bot
 from utils.logging import configure_logger
+
 logger = logging.getLogger('lexibot')
 
 l10n_dir_path = Path(sys.argv[0]).parents[1] / 'l10n'
@@ -16,7 +17,7 @@ gettext.bindtextdomain('lexibot', l10n_dir_path)
 gettext.install('lexibot', l10n_dir_path, names=("ngettext",))
 
 def main():
-    """Method to run a bot"""
+    """Run a bot."""
     logger.info(l10n_dir_path)
     parser = argparse.ArgumentParser(description=_("Main script to invoke "
                                      "custom Telegram bots"))

@@ -12,12 +12,12 @@ _bot_token_hash = None
 
 
 def _initialized():
-    """Returns True if all parameters of the application were set."""
+    """Return True if all parameters of the application were set."""
     return _dbConnection and _bot_token_hash
 
 
 def initialize_app(conn, bot_token_hash) -> flask.Flask:
-    """Returns Flask application initialized with DB connection."""
+    """Return Flask application initialized with DB connection."""
     global _dbConnection, _bot_token_hash
     _dbConnection = conn
     _bot_token_hash = bot_token_hash
@@ -26,7 +26,7 @@ def initialize_app(conn, bot_token_hash) -> flask.Flask:
 
 @_app.route('/i/<int:link_id>', methods=['GET'])
 def click(link_id: int):
-    """Handles short-link click."""
+    """Handle short-link click."""
     if not _initialized():
         return _('Not started.'), 500
 
@@ -37,7 +37,7 @@ def click(link_id: int):
 @_app.route('/create', methods=['POST'])
 def create():
     """
-    Creates new short-link.
+    Create new short-link.
 
     Takes JSON object as an input, which should contain chat id as 'chat_id', word as 'word' and bot token hash as 'token_hash'.
 
@@ -64,7 +64,7 @@ def create():
 @_app.route('/top/<string:chat_id>', methods=['GET'])
 def get_top(chat_id: str):
     """
-    Returns pairs of (word, number of clicks) for top 5 clicked words for chat with 'chat_id'.
+    Return pairs of (word, number of clicks) for top 5 clicked words for chat with 'chat_id'.
 
     Takes optional parameter 'date'. The result will be filtered for the time period, which includes date.
     If 'date' parameter is not provided it is defaulted to current date in UTC.
@@ -84,6 +84,6 @@ def get_top(chat_id: str):
 
 @_app.errorhandler(Exception)
 def all_exception_handler(error):
-    """Handles all exceptions."""
+    """Handle all exceptions."""
     print(_('ERROR'), error)
     return _('Error: {}').format(error), 500

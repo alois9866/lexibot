@@ -11,7 +11,7 @@ def _full_link(provider, word):
 
 
 def create(conn, chat_id: str, word: str, provider: str = JISHO_URL) -> str:
-    """Inserts new word in chat with id chat_id, returns id of the inserted word."""
+    """Insert new word in chat with id chat_id, returns id of the inserted word."""
     if not chat_id:
         raise ValueError('chat_id is empty')
     chat_id = str(chat_id)
@@ -48,7 +48,7 @@ def create(conn, chat_id: str, word: str, provider: str = JISHO_URL) -> str:
 
 # todo: Consider limiting clicks from one user somehow.
 def handle_click(conn, link_id: int) -> str:
-    """Increases click count for word with id link_id and returns full dictionary link to the word."""
+    """Increase click count for word with id link_id and returns full dictionary link to the word."""
     link_id = int(link_id)
 
     current_date = datetime.datetime.utcnow().date()
@@ -77,10 +77,7 @@ def handle_click(conn, link_id: int) -> str:
 
 
 def get_words_with_clicks(conn, chat_id: str, current_date: datetime.date):
-    """
-    Returns top 5 most clicked words as pairs (word, clicks) for chat with chat_id
-    and with start-end interval that includes current_date.
-    """
+    """Return top 5 most clicked words as pairs (word, clicks) for chat with chat_id and with start-end interval that includes current_date."""
     chat_id = str(chat_id)
 
     tx = conn.cursor()
