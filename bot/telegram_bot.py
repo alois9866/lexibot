@@ -209,7 +209,7 @@ def run_channel(config: Dict[str, Union[str, Dict[str, str]]]) -> None:
     registered_chats = {}
 
     update_freq = 5  # sec
-    report_update_freq = 30  # 1 week
+    report_update_freq = 120  # 1 week
 
     last_report_timestamp = time.time()
     server_ip_port = f'{config["server"]["ip"]}:{config["server"]["port"]}'
