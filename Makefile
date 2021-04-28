@@ -2,7 +2,7 @@
 .PHONY: test lint deps write-deps run-local-db l10n
 
 test:
-	python -m pytest
+	python -m pytest -v
 
 lint:
 	pylint --ignore-patterns=test_.*?py bot/ server/
