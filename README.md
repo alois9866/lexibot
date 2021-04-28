@@ -86,9 +86,12 @@ Make sure you have [Sphinx](https://www.sphinx-doc.org) package installed.
 Execute `make doc_html` and open _docs/doc_build/html/index.html_
 in a browser.
 
-### Update localization specs
+### Use localization
+`ru` and `en` locales are supported. 
+Run `make l10n` to obtain required binary file, which cover existing translations.
+To use modified translation run the following:
 ```shell script
-## `ru` and `en` locales are supported. Example for `ru`:
+## Example for `ru`:
 
 # extract strings to translate from the code
 pybabel extract -o l10n/lexibot.pot <path_to_module1> <path_to_module2> ... 
