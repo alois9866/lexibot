@@ -1,0 +1,209 @@
+# Russian translations for PROJECT.
+# Copyright (C) 2021 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2021-04-27 00:25+0300\n"
+"PO-Revision-Date: 2021-04-26 21:21+0300\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: ru\n"
+"Language-Team: ru <LL@li.org>\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.0\n"
+
+#: bot/telegram_bot.py:29
+msgid ""
+"Hello, my name is {}. I am a bot. You can type `/help` to know me "
+"better..."
+msgstr ""
+"Привет, меня зовут {}. Я бот. Наберав команду /help , ты можешь "
+"узнать,что я умею..."
+
+#: bot/telegram_bot.py:36
+msgid ""
+"Info:\n"
+"You can use the following commands:\n"
+msgstr ""
+"Информация:\n"
+"Могут быть вызваны следующие команды:\n"
+
+#: bot/telegram_bot.py:54
+msgid "Japanese words: {}"
+msgstr "Японские слова: {}"
+
+#: bot/telegram_bot.py:91
+msgid ""
+"Talk to the bot here: t.me/{0}\n"
+" or inside Telegram application: @{0}"
+msgstr ""
+"Пообщаться с ботом можно здесь: t.me/{0}\n"
+" или внутри приложения Telegram: @{0}"
+
+#: bot/telegram_bot.py:93
+msgid "Press Ctrl+C to stop the bot..."
+msgstr "Нажмите Ctrl+C для завершения работы бота"
+
+#: bot/telegram_bot.py:103
+msgid "Cleared pending updates for the bot"
+msgstr "Предыдущие необработанные обновления были очищены"
+
+#: bot/telegram_bot.py:105
+msgid "No pending updates for the bot"
+msgstr "Отсутствуют необработанные обновления для бота"
+
+#: bot/telegram_bot.py:126
+msgid "Bot hash {0}"
+msgstr "Хэш бота {0}"
+
+#: bot/telegram_bot.py:139
+msgid "Processing word {}"
+msgstr "Обрабатывается слово {}"
+
+#: bot/telegram_bot.py:142 bot/telegram_bot.py:173
+msgid ""
+"Response \n"
+"\tstatus: {} \n"
+"\tcontent: {}"
+msgstr ""
+"Ответный отчёт \n"
+"\tстатус: {} \n"
+"\tсодержимое: {}"
+
+#: bot/telegram_bot.py:154
+msgid "Check out word translations:"
+msgstr "Переводы слов можно посмотреть тут:"
+
+#: bot/telegram_bot.py:177
+msgid "Most popular words:\n"
+msgstr "Наиболее популярные слова:\n"
+
+#: bot/telegram_bot.py:180
+msgid "\t- `{}` was clicked {} "
+msgstr "\t- `{}` было кликнуто {} "
+
+#: bot/telegram_bot.py:181
+msgid "time"
+msgid_plural "times"
+msgstr[0] "раз"
+msgstr[1] "раза"
+msgstr[2] "раз"
+
+#: bot/telegram_bot.py:182
+msgid " this week"
+msgstr " на этой неделе"
+
+#: bot/telegram_bot.py:218
+msgid "Starting up the {} bot custom behaviour..."
+msgstr "Инициирую работу заданного сценария для бота"
+
+#: bot/telegram_bot.py:249
+msgid "Finishing custom bot behaviour."
+msgstr "Завершаю работу заданного сценария для бота"
+
+#: bot/main.py:21
+msgid "Main script to invoke custom Telegram bots"
+msgstr "Главный модуль для запуска настраиваемых сценариев для Telegram-ботов"
+
+#: bot/main.py:24
+msgid "\t.json configuration file, check README.md for an example"
+msgstr ""
+"\tконфигурационный .json файл, пример использования можно посмотреть в "
+"README.md"
+
+#: bot/main.py:27
+msgid "\twhether to print debug messages from logger"
+msgstr "\tвыводить ли отладочные сообщения"
+
+#: bot/main.py:29
+msgid "--config_path is not provided."
+msgstr "--config_path параметр не выставлен"
+
+#: bot/main.py:32
+msgid "You have to provide Telegram token"
+msgstr "Вам необходимо предоставить Telegram token"
+
+#: bot/main.py:34
+msgid "You have to provide server ip address bot interacts with"
+msgstr ""
+"Вам необходимо предоставить ip-адрес сервера, с которым будет "
+"взаимодействовать бот-клиент"
+
+#: server/main.py:30
+msgid " variable is not set: should contain DB user name."
+msgstr " переменная не выставлена: она должна содержать имя для базы данных"
+
+#: server/main.py:34
+msgid " variable is not set: should contain DB user password."
+msgstr " переменная не выставлена: она должна содержать пароль для базы данных"
+
+#: server/main.py:38
+msgid " variable is not set: should contain DB host address."
+msgstr " переменная не выставлена: она должна содержать ip-адрес для базы данных"
+
+#: server/main.py:44
+msgid "\"server\" parameter is not set in config file."
+msgstr "параметр \"server\" не выставлен в конфигурационном файле"
+
+#: server/main.py:45
+msgid "\"server.ip\" parameter is not set in config file."
+msgstr "параметр \"server.ip\" не выставлен в конфигурационном файле"
+
+#: server/main.py:46
+msgid "\"server.port\" parameter is not set in config file."
+msgstr "параметр \"server.port\" не выставлен в конфигурационном файле"
+
+#: server/main.py:48
+msgid ""
+"\"token\" parameter is not set in config file: should contain token of "
+"corresponding Telegram bot client."
+msgstr ""
+"параметр \"token\" не выставлен в конфигурационном файле, он должен "
+"содержать token для соответствующего Telegram-бота"
+
+#: server/main.py:58
+msgid "Starting server at {}:{}"
+msgstr "Запускаю сервер на {}:{}"
+
+#: server/application.py:31 server/application.py:47
+msgid "Not started."
+msgstr "Не было запущено."
+
+#: server/application.py:49
+msgid "Request not in JSON format"
+msgstr "Запрос представлен не в JSON формате"
+
+#: server/application.py:53
+msgid "No valid input provided"
+msgstr "Обнаружен некорректный ввод"
+
+#: server/application.py:57
+msgid "No bot token hash provided"
+msgstr "Не предоставлен token hash"
+
+#: server/application.py:59
+msgid "Incorrect bot token hash"
+msgstr "Некорректный token hash для бота"
+
+#: server/application.py:73
+msgid "No chat ID provided"
+msgstr "Не обнаружено chat ID"
+
+#: server/application.py:88
+msgid "ERROR"
+msgstr "ОШИБКА"
+
+#: server/application.py:89
+msgid "Error: {}"
+msgstr "Ошибка: {}"
+
+#~ msgid "\t- `{}` was clicked {} times this week.\n"
+#~ msgstr ""
+

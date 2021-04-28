@@ -27,6 +27,7 @@ port-for==0.4
 psutil==5.8.0
 psycopg2==2.8.6
 py==1.10.0
+pydocstyle==6.0.0
 Pygments==2.8.1
 pylint==2.7.2
 pyparsing==2.4.7
