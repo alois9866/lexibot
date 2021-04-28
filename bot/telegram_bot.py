@@ -7,7 +7,6 @@ import hashlib
 import time
 import logging
 from typing import Dict, Union
-# from gettext import ngettext
 
 import requests
 from telegram import Bot, Message
@@ -185,8 +184,8 @@ def send_regular_report(bot: Bot,
 
 def run_channel(config: Dict[str, Union[str, Dict[str, str]]]) -> None:
     """Function to activate Telegram bot custom behaviour in a channel
-    It runs endless while cycle, to terminate - press Ctrl+C
 
+    It runs endless while cycle, to terminate - press Ctrl+C
     :param config: dictionary with parameters related to server and bot client
     For details check README.md file in repo root
     :return: None
@@ -209,7 +208,7 @@ def run_channel(config: Dict[str, Union[str, Dict[str, str]]]) -> None:
     registered_chats = {}
 
     update_freq = 5  # sec
-    report_update_freq = 30  # 1 week
+    report_update_freq = 120  # 1 week
 
     last_report_timestamp = time.time()
     server_ip_port = '{}:{}'.format(config['server']['ip'],

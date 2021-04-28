@@ -59,6 +59,12 @@
 <span class="target" id="module-bot.telegram_bot"><span id="telegram-bot-module"></span></span><p>This is a core module for Telegram bot version.</p>
 <p>Adjusts bot replies to user command/messages.</p>
 <dl class="py function">
+<dt id="bot.telegram_bot.clear_bot_updates">
+<code class="sig-prename descclassname"><span class="pre">bot.telegram_bot.</span></code><code class="sig-name descname"><span class="pre">clear_bot_updates</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bot</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">telegram.bot.Bot</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="headerlink" href="#bot.telegram_bot.clear_bot_updates" title="Permalink to this definition">¶</a></dt>
+<dd><p>Clear pending updates from Telegram</p>
+</dd></dl>
+
+<dl class="py function">
 <dt id="bot.telegram_bot.echo_reply">
 <code class="sig-prename descclassname"><span class="pre">bot.telegram_bot.</span></code><code class="sig-name descname"><span class="pre">echo_reply</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">update</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">telegram.update.Update</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">telegram.ext.callbackcontext.CallbackContext</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="headerlink" href="#bot.telegram_bot.echo_reply" title="Permalink to this definition">¶</a></dt>
 <dd><p>Echo user message</p>
@@ -79,14 +85,10 @@
 <dl class="py function">
 <dt id="bot.telegram_bot.run_channel">
 <code class="sig-prename descclassname"><span class="pre">bot.telegram_bot.</span></code><code class="sig-name descname"><span class="pre">run_channel</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="headerlink" href="#bot.telegram_bot.run_channel" title="Permalink to this definition">¶</a></dt>
-<dd><p>Function to activate Telegram bot custom behaviour in a channel
-It runs endless while cycle, to terminate - press Ctrl+C</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>config</strong> – dictionary with parameters related to server and bot client</p>
-</dd>
-</dl>
-<p>For details check README.md file in repo root
+<dd><p>Function to activate Telegram bot custom behaviour in a channel</p>
+<p>It runs endless while cycle, to terminate - press Ctrl+C
+:param config: dictionary with parameters related to server and bot client
+For details check README.md file in repo root
 :return: None</p>
 <dl>
 <dt>Usage:</dt><dd><div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">json</span>
