@@ -1,9 +1,10 @@
-"""This is a module with text parsing methods"""
+"""This is a module with text parsing methods."""
 
 import re
 from typing import List
-from sudachipy import tokenizer as japanese_tokenizer
+
 from sudachipy import dictionary as japanese_dictionary
+from sudachipy import tokenizer as japanese_tokenizer
 
 unicode_ranges = {
     'hiragana': range(int("0x3040", base=16), int("0x309f", base=16)),
@@ -15,7 +16,7 @@ unicode_ranges = {
 
 
 def is_japanese_char(symbol: str) -> bool:
-    '''Test whether character can be found in japanese text according to Unicode code'''
+    """Test whether character can be found in japanese text according to Unicode code."""
     keys = ['hiragana', 'katakana', 'katakana_phonetic_extensions', 'halfwidth_katakana', 'cjk']
     for k in keys:
         if ord(symbol) in unicode_ranges[k]:

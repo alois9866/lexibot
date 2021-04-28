@@ -79,7 +79,7 @@ msgstr ""
 
 #: bot/telegram_bot.py:154
 msgid "Check out word translations:"
-msgstr "Переводы слов можно посмотреть далее:"
+msgstr "Переводы слов можно посмотреть тут:"
 
 #: bot/telegram_bot.py:177
 msgid "Most popular words:\n"
@@ -87,7 +87,7 @@ msgstr "Наиболее популярные слова:\n"
 
 #: bot/telegram_bot.py:180
 msgid "\t- `{}` was clicked {} "
-msgstr "\t- `{}` было щёлкнуто {} "
+msgstr "\t- `{}` было кликнуто {} "
 
 #: bot/telegram_bot.py:181
 msgid "time"

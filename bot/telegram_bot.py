@@ -4,8 +4,8 @@ This is a core module for Telegram bot version.
 Adjusts bot replies to user command/messages.
 """
 import hashlib
-import time
 import logging
+import time
 from typing import Dict, Union
 
 import requests
@@ -16,22 +16,23 @@ from telegram.ext import CommandHandler, MessageHandler, Updater, \
 from telegram.update import Update
 
 from bot.parser import extract_japanese_words
+
 logger = logging.getLogger('lexibot')
 
 private_message_commands = ['help', 'start', 'echo']
 
 
 def start_reply(update: Update, context: CallbackContext) -> None:
-    """The reply action on user's /start command"""
+    """Reply on user's /start command."""
     context.bot.send_message(
         chat_id=update.effective_chat.id,
         text=_("Hello, my name is {}. "
-             "I am a bot. "
-             "You can type `/help` to know me better...").format(context.bot.first_name))
+               "I am a bot. "
+               "You can type `/help` to know me better...").format(context.bot.first_name))
 
 
 def help_reply(update: Update, context: CallbackContext) -> None:
-    """The reply action on user's /help command"""
+    """Reply on user's /help command."""
     text = (_("Info:\nYou can use the following commands:\n"))
     for auc in private_message_commands:
         text += '\t`/{}`\n'.format(auc)
@@ -40,14 +41,14 @@ def help_reply(update: Update, context: CallbackContext) -> None:
 
 
 def echo_reply(update: Update, _: CallbackContext) -> None:
-    """Echo user message"""
+    """Echo user message."""
     text = update.message.text
     answer = ' '.join(text.split(' ')[1:])
     update.message.reply_text(answer)
 
 
 def reply_japanese(update: Update, _: CallbackContext) -> None:
-    """Echo only japanese words"""
+    """Echo only japanese words."""
     if update.message is not None:
         text = update.message.text
         answer = _("Japanese words: {}").format(extract_japanese_words(text))
@@ -56,7 +57,8 @@ def reply_japanese(update: Update, _: CallbackContext) -> None:
 
 def run_pm(bot_token: str) -> None:
     """
-    Function to activate Telegram bot custom behaviour in private messages.
+    Activate Telegram bot custom behaviour in private messages.
+
     It is considered as test function to verify whether telegram responds properly.
 
     :param bot_token: Telegram bot token
@@ -94,7 +96,7 @@ def run_pm(bot_token: str) -> None:
 
 
 def clear_bot_updates(bot: Bot) -> None:
-    """Clear pending updates from Telegram"""
+    """Clear pending updates from Telegram."""
     new_updates = bot.get_updates()
     if new_updates != []:
         new_id = new_updates[-1].update_id + 1
@@ -109,8 +111,9 @@ def send_word_links(bot: Bot,
                     message: Message,
                     server_ip: str = '0.0.0.0:80') -> None:
     """
-    Reply to channel message by providing links to online dictionary
-    For every unique japanese word link is generated and sent to chat
+    Reply to channel message by providing links to online dictionary.
+
+    For every unique japanese word link is generated and sent to chat.
 
     :param bot: telegeram.Bot instance created via unique Telegram bot token
     :param channel_id: `id` field to initialize telegram.Chat instance.
@@ -157,7 +160,7 @@ def send_word_links(bot: Bot,
 def send_regular_report(bot: Bot,
                         channel_id: str,
                         server_ip: str = '0.0.0.0:80') -> None:
-    """Send regular report about user clicks on word links
+    """Send regular report about user clicks on word links.
 
     :param bot: telegeram.Bot instance created via unique Telegram bot token
     :param channel_id: `id` field to initialize telegram.Chat instance.
@@ -166,7 +169,6 @@ def send_regular_report(bot: Bot,
         for the users/bots - participants of the channel
     :param server_ip: server ip address + port. Bot will communicate with server using this info.
     """
-
     url = f'http://{server_ip}/top/{channel_id}'
     resp = requests.get(url)
     logger.debug(_("Response \n\tstatus: {} \n\tcontent: {}").format(
@@ -183,7 +185,7 @@ def send_regular_report(bot: Bot,
 
 
 def run_channel(config: Dict[str, Union[str, Dict[str, str]]]) -> None:
-    """Function to activate Telegram bot custom behaviour in a channel
+    """Activate Telegram bot custom behaviour in a channel.
 
     It runs endless while cycle, to terminate - press Ctrl+C
     :param config: dictionary with parameters related to server and bot client

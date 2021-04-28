@@ -6,6 +6,7 @@ test:
 
 lint:
 	pylint --ignore-patterns=test_.*?py bot/ server/
+	pydocstyle bot/ server/
 
 deps:
 	pip install -r requirements.txt
@@ -33,5 +34,6 @@ l10n:
 	pybabel compile -D lexibot -i l10n/ru/LC_MESSAGES/lexibot.po -o l10n/ru/LC_MESSAGES/lexibot.mo
 
 doc_html:
-	sphinx-build -M html "./docs/source" "./docs/doc_build"
 	mkdir -p ./docs/source/_static ./docs/source/_templates
+	sphinx-build -M html "./docs/source" "./docs/doc_build"
+
