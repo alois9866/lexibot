@@ -13,8 +13,6 @@ Welcome to lexibot's documentation!
     BotClientApi
     ServerApi
 
-.. note::
-   Project is in progress
 
 Indices and tables
 ==================

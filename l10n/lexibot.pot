@@ -1,0 +1,188 @@
+# Translations template for PROJECT.
+# Copyright (C) 2021 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2021-04-27 00:25+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.0\n"
+
+#: bot/telegram_bot.py:29
+msgid ""
+"Hello, my name is {}. I am a bot. You can type `/help` to know me "
+"better..."
+msgstr ""
+
+#: bot/telegram_bot.py:36
+msgid ""
+"Info:\n"
+"You can use the following commands:\n"
+msgstr ""
+
+#: bot/telegram_bot.py:54
+msgid "Japanese words: {}"
+msgstr ""
+
+#: bot/telegram_bot.py:91
+msgid ""
+"Talk to the bot here: t.me/{0}\n"
+" or inside Telegram application: @{0}"
+msgstr ""
+
+#: bot/telegram_bot.py:93
+msgid "Press Ctrl+C to stop the bot..."
+msgstr ""
+
+#: bot/telegram_bot.py:103
+msgid "Cleared pending updates for the bot"
+msgstr ""
+
+#: bot/telegram_bot.py:105
+msgid "No pending updates for the bot"
+msgstr ""
+
+#: bot/telegram_bot.py:126
+msgid "Bot hash {0}"
+msgstr ""
+
+#: bot/telegram_bot.py:139
+msgid "Processing word {}"
+msgstr ""
+
+#: bot/telegram_bot.py:142 bot/telegram_bot.py:173
+msgid ""
+"Response \n"
+"\tstatus: {} \n"
+"\tcontent: {}"
+msgstr ""
+
+#: bot/telegram_bot.py:154
+msgid "Check out word translations:"
+msgstr ""
+
+#: bot/telegram_bot.py:177
+msgid "Most popular words:\n"
+msgstr ""
+
+#: bot/telegram_bot.py:180
+msgid "\t- `{}` was clicked {} "
+msgstr ""
+
+#: bot/telegram_bot.py:181
+msgid "time"
+msgid_plural "times"
+msgstr[0] ""
+msgstr[1] ""
+
+#: bot/telegram_bot.py:182
+msgid " this week"
+msgstr ""
+
+#: bot/telegram_bot.py:218
+msgid "Starting up the {} bot custom behaviour..."
+msgstr ""
+
+#: bot/telegram_bot.py:249
+msgid "Finishing custom bot behaviour."
+msgstr ""
+
+#: bot/main.py:21
+msgid "Main script to invoke custom Telegram bots"
+msgstr ""
+
+#: bot/main.py:24
+msgid "\t.json configuration file, check README.md for an example"
+msgstr ""
+
+#: bot/main.py:27
+msgid "\twhether to print debug messages from logger"
+msgstr ""
+
+#: bot/main.py:29
+msgid "--config_path is not provided."
+msgstr ""
+
+#: bot/main.py:32
+msgid "You have to provide Telegram token"
+msgstr ""
+
+#: bot/main.py:34
+msgid "You have to provide server ip address bot interacts with"
+msgstr ""
+
+#: server/main.py:30
+msgid " variable is not set: should contain DB user name."
+msgstr ""
+
+#: server/main.py:34
+msgid " variable is not set: should contain DB user password."
+msgstr ""
+
+#: server/main.py:38
+msgid " variable is not set: should contain DB host address."
+msgstr ""
+
+#: server/main.py:44
+msgid "\"server\" parameter is not set in config file."
+msgstr ""
+
+#: server/main.py:45
+msgid "\"server.ip\" parameter is not set in config file."
+msgstr ""
+
+#: server/main.py:46
+msgid "\"server.port\" parameter is not set in config file."
+msgstr ""
+
+#: server/main.py:48
+msgid ""
+"\"token\" parameter is not set in config file: should contain token of "
+"corresponding Telegram bot client."
+msgstr ""
+
+#: server/main.py:58
+msgid "Starting server at {}:{}"
+msgstr ""
+
+#: server/application.py:31 server/application.py:47
+msgid "Not started."
+msgstr ""
+
+#: server/application.py:49
+msgid "Request not in JSON format"
+msgstr ""
+
+#: server/application.py:53
+msgid "No valid input provided"
+msgstr ""
+
+#: server/application.py:57
+msgid "No bot token hash provided"
+msgstr ""
+
+#: server/application.py:59
+msgid "Incorrect bot token hash"
+msgstr ""
+
+#: server/application.py:73
+msgid "No chat ID provided"
+msgstr ""
+
+#: server/application.py:88
+msgid "ERROR"
+msgstr ""
+
+#: server/application.py:89
+msgid "Error: {}"
+msgstr ""
+
